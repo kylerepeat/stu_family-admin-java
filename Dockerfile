@@ -1,5 +1,7 @@
-FROM maven:3.9.9-eclipse-temurin-17 AS builder
-WORKDIR /workspace
+# escape=`
+
+FROM maven:3.9.9-eclipse-temurin-17-nanoserver-ltsc2022 AS builder
+WORKDIR C:\app
 
 COPY pom.xml ./
 COPY stufamily-core/pom.xml stufamily-core/pom.xml
@@ -14,14 +16,14 @@ COPY stufamily-boot/src stufamily-boot/src
 
 RUN mvn -B -DskipTests -pl stufamily-boot -am package
 
-FROM eclipse-temurin:17-jre
-WORKDIR /app
+FROM eclipse-temurin:17-jre-nanoserver-ltsc2022
+WORKDIR C:\app
 
 ENV TZ=Asia/Shanghai
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
 
-COPY --from=builder /workspace/stufamily-boot/target/stufamily-boot-*.jar /app/app.jar
+COPY --from=builder C:/app/stufamily-boot/target/stufamily-boot-*.jar C:/app/app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["cmd", "/S", "/C", "java %JAVA_OPTS% -jar C:\\app\\app.jar"]
