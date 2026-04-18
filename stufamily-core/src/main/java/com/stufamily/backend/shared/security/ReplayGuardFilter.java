@@ -159,7 +159,7 @@ public class ReplayGuardFilter extends OncePerRequestFilter {
         response.getWriter().write(body);
     }
 
-    static void clearForTest() {
+    public static void clearForTest() {
         GET_LAST_REQUEST_NS.clear();
         WRITE_LAST_REQUEST_NS.clear();
         GET_REQUEST_COUNTER.set(0);
