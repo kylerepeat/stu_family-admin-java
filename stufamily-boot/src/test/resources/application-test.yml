@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5000/stufamily?currentSchema=stufamily&stringtype=unspecified
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  security:
+    jwt:
+      issuer: stuFamily
+      secret: "ChangeThisJwtSecretForProductionAndKeepAtLeast32Chars!!"
+      access-expire-seconds: 7200
+      refresh-expire-seconds: 604800
+  wechat:
+    miniapp:
+      app-id: "test-app-id"
+      secret: "test-secret"
+      msg-data-format: JSON
+    pay:
+      app-id: "test-miniapp-appid"
+      mch-id: "test-mchid"
+      mch-key: "test-mch-key"
+      notify-url: "https://test-domain.com/api/weixin/pay/notify"
+      mock-create-order-enabled: true
+      mock-notify-enabled: true
+
+logging:
+  level:
+    root: WARN
+    com.stufamily.backend: INFO
